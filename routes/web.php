@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -9,12 +11,21 @@ Route::get('/', function () {
 });
 
 Route::get('/database', function () {
-    return DB::table('users')->get();
+    $users = [];
+
+    $benchmark = Benchmark::measure(function () use (&$users) {
+        User::factory()->create();
+
+        $users = DB::table('users')->count();
+    });
+
+    return [
+        'users' => $users,
+        'time' => $benchmark,
+    ];
 });
 
 Route::get('/cache', function () {
-    // count the number of times the route has been visited
-
     $visits = Cache::get('visits', 0);
 
     Cache::put('visits', $visits + 1);
