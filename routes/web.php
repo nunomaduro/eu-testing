@@ -14,8 +14,6 @@ Route::get('/database', function () {
     $users = [];
 
     $benchmark = Benchmark::measure(function () use (&$users) {
-        User::factory()->create();
-
         $users = DB::table('users')->count();
     });
 
