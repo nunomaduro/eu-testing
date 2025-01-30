@@ -15,6 +15,14 @@ Route::get('/database', function () {
 
     $benchmark = Benchmark::measure(function () use (&$users) {
         $users = DB::table('users')->count();
+        $users = DB::table('users')->count();
+        $users = DB::table('users')->count();
+        $users = DB::table('users')->count();
+        $users = DB::table('users')->count();
+        $users = DB::table('users')->count();
+        $users = DB::table('users')->count();
+        $users = DB::table('users')->count();
+        $users = DB::table('users')->count();
     });
 
     return [
