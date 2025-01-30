@@ -26,12 +26,15 @@ Route::get('/database', function () {
 });
 
 Route::get('/cache', function () {
-    $visits = Cache::get('visits', 0);
+    $benchmark = Benchmark::measure(function () use (&$users) {
+        $visits = Cache::get('visits', 0);
 
-    Cache::put('visits', $visits + 1);
+        Cache::put('visits', $visits + 1);
+    });
 
     return [
-        'visits' => $visits
+        'visits' => Cache::get('visits'),
+        'time' => $benchmark,
     ];
 });
 
